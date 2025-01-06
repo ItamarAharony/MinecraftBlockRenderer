@@ -17,25 +17,29 @@ add_subdirectory(${GLFW_DIR})
 
 # Include directories
 include_directories(
-    ${CMAKE_SOURCE_DIR} # For the main project includes
-    ${GLFW_DIR}/include # For GLFW headers
-    ${GLAD_DIR}/include # For Glad headers
-    ${GLM_DIR}          # For GLM headers
-    ${CMAKE_SOURCE_DIR}/external # For stb_image.h
-    ${CMAKE_SOURCE_DIR}/include          # For shader_loader.h and helper_functions.h
+    ${CMAKE_SOURCE_DIR}             # For the main project includes
+    ${GLFW_DIR}/include             # For GLFW headers
+    ${GLAD_DIR}/include             # For Glad headers
+    ${GLM_DIR}                      # For GLM headers
+    ${CMAKE_SOURCE_DIR}/external    # For stb_image.h
+    ${CMAKE_SOURCE_DIR}/include     # For shader_loader.h and helper_functions.h
 )
 
-# Add the source files for the project
-set(SOURCES
+# Collect all source files (C++ files) in the src directory
+file(GLOB SOURCES
     src/main.cpp
-    src/shader_loader.cpp           # Add shader_loader.cpp
-    src/helper_functions.cpp       # Add helper_functions.cpp
-    external/stb_image.cpp         # Add the path to stb_image.cpp
-    # Add other source files here as necessary
+    src/shader_loader.cpp
+    src/helper_functions.cpp
+    external/stb_image.cpp
+)
+
+# Collect all header files (C++ header files) in the include directory
+file(GLOB HEADERS
+    include/*.h
 )
 
 # Add an executable target for the project
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 # Link libraries (GLFW, Glad, and OpenGL)
 target_link_libraries(${PROJECT_NAME} glfw glad opengl32)

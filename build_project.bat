@@ -13,3 +13,6 @@ cd build
 
 REM Run CMake to regenerate project files
 cmake -G "Visual Studio 17 2022" ..
+
+REM Open the generated .sln file with Visual Studio
+start MinecraftBlockRenderer.sln
