@@ -1,26 +1,41 @@
-# MinecraftBlockRenderer
+# Minecraft Block Renderer
 
-This is a C++ OpenGL project that renders a rotating Minecraft dirt block using shaders. The project uses GLFW for window/context management, GLAD for OpenGL function loading, and GLM for matrix transformations. Additionally, texture mapping is used to apply various textures to the block.
+A lightweight C++ project using OpenGL for rendering a rotating Minecraft dirt block.
+
+## Features
+- OpenGL-based 3D rendering with GLFW, GLAD, and GLM.
+- CMake support for cross-platform compatibility.
+- Organized project structure.
 
 ## Prerequisites
-
-- CMake (3.10 or higher)
-- Visual Studio 2022 (or any compatible IDE)
-- GLFW, GLAD, GLM, stb_image libraries
+- C++17-compatible compiler
+- CMake (version 3.10 or later)
+- OpenGL 3.3 or higher
+- GLFW, GLAD, and GLM libraries
 
 ## Building the Project
 
-1. Clone the repository to your local machine.
-2. Run `build_project.bat` to generate the solution files.
-3. Open the generated `.sln` file in Visual Studio 2022.
-4. Build and run the project.
+### Windows
+1. Open a terminal and navigate to the project directory.
+2. Run the following commands:
 
-## Folder Structure
+```
+mkdir build 
+cd build 
+cmake -G "Visual Studio 17 2022" ..
+```
+3. Open the generated `.sln` file in Visual Studio 2022 and build the solution.
 
-- `src/`: Contains source files for the project.
-- `include/`: Header files for shaders and helper functions.
-- `external/`: External dependencies like GLFW, GLAD, and stb_image.
-- `resources/`: Textures used for rendering the block.
-- `shaders/`: GLSL shader files for vertex and fragment shaders.
-- `CMakeLists.txt`: CMake configuration file for building the project.
-- `build_project.bat`: Batch script to clean, build, and open the solution.
+### Linux/Mac
+1. Open a terminal and navigate to the project directory.
+2. Run the following commands:
+
+```
+mkdir build
+cd build 
+cmake .. make
+```
+3. Run the executable in the `build` folder.
+
+## Resources
+The project includes shaders, textures, and helper functions required for the rendering process.
