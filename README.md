@@ -15,16 +15,20 @@ A lightweight C++ project using OpenGL for rendering a rotating Minecraft dirt b
 
 ## Building the Project
 
-### Windows
-1. Open a terminal and navigate to the project directory.
-2. Run the following commands:
+### Windows (Using Visual Studio 17 2022)
+1. Make sure to have Visual Studio 2022 or a compatible version installed
+2. Open a terminal and navigate to the project directory.
+3. Run the following commands:
 
 ```
 mkdir build 
 cd build 
 cmake -G "Visual Studio 17 2022" ..
 ```
-3. Open the generated `.sln` file in Visual Studio 2022 and build the solution.
+4. Open the generated `.sln` file in Visual Studio 2022 and build the solution.
+5. In the Solution Explorer menu (on the right tab), right click the `MinecraftBlockRenderer` 
+object. In the drop-down menu, pick "Set as Startup Project"
+6. Build and run the code (can be done by pressing F5)
 
 ### Linux/Mac
 1. Open a terminal and navigate to the project directory.
