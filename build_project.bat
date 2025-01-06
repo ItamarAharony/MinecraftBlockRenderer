@@ -12,4 +12,4 @@ REM Change to the build directory
 cd build
 
 REM Run CMake to regenerate project files
-cmake -G "Visual Studio 17 2022" -A x64 ..
+cmake -G "Visual Studio 17 2022" ..

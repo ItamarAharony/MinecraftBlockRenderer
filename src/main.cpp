@@ -6,84 +6,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-
-#include <fstream>
-#include <sstream>
-
-std::string readShaderFile(const char* filePath) {
-    std::ifstream shaderFile(filePath);
-    std::stringstream shaderStream;
-
-    if (shaderFile.is_open()) {
-        shaderStream << shaderFile.rdbuf();
-        shaderFile.close();
-    }
-    else {
-        std::cerr << "ERROR: Could not open shader file " << filePath << std::endl;
-    }
-
-    return shaderStream.str();
-}
-
-unsigned int compileShader(const char* shaderSource, GLenum shaderType) {
-    unsigned int shader = glCreateShader(shaderType);
-    glShaderSource(shader, 1, &shaderSource, nullptr);
-    glCompileShader(shader);
-
-    // Check for shader compilation errors
-    int success;
-    char infoLog[512];
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(shader, 512, nullptr, infoLog);
-        std::cerr << "ERROR: Shader compilation failed\n" << infoLog << std::endl;
-    }
-
-    return shader;
-}
-
-unsigned int createShaderProgram(const char* vertexPath, const char* fragmentPath) {
-    // Read the shader files
-    std::string vertexCode = readShaderFile(vertexPath);
-    std::string fragmentCode = readShaderFile(fragmentPath);
-
-    // Compile the shaders
-    unsigned int vertexShader = compileShader(vertexCode.c_str(), GL_VERTEX_SHADER);
-    unsigned int fragmentShader = compileShader(fragmentCode.c_str(), GL_FRAGMENT_SHADER);
-
-    // Create and link the shader program
-    unsigned int shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-
-    // Check for linking errors
-    int success;
-    char infoLog[512];
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetProgramInfoLog(shaderProgram, 512, nullptr, infoLog);
-        std::cerr << "ERROR: Shader program linking failed\n" << infoLog << std::endl;
-    }
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-
-    return shaderProgram;
-}
+#include "shader_loader.h"
+#include "helper_functions.h"
 
 
-
-
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
-    glViewport(0, 0, width, height);
-}
-
-void processInput(GLFWwindow* window) {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-}
 GLuint loadTexture(const char* path)
 {
     GLuint textureID;
@@ -146,8 +72,6 @@ int main() {
     // Load and create the shader program
     const char* vertexShaderPath = "../shaders/vertex_shader.glsl";
     const char* fragmentShaderPath = "../shaders/fragment_shader.glsl";
- 
-
     unsigned int shaderProgram = createShaderProgram(vertexShaderPath, fragmentShaderPath);
 
 

@@ -22,12 +22,15 @@ include_directories(
     ${GLAD_DIR}/include # For Glad headers
     ${GLM_DIR}          # For GLM headers
     ${CMAKE_SOURCE_DIR}/external # For stb_image.h
+    ${CMAKE_SOURCE_DIR}/include          # For shader_loader.h and helper_functions.h
 )
 
 # Add the source files for the project
 set(SOURCES
     src/main.cpp
-    external/stb_image.cpp   # Add the path to stb_image.cpp
+    src/shader_loader.cpp           # Add shader_loader.cpp
+    src/helper_functions.cpp       # Add helper_functions.cpp
+    external/stb_image.cpp         # Add the path to stb_image.cpp
     # Add other source files here as necessary
 )
 
