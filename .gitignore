@@ -1,8 +1,0 @@
-# Ignore build and Visual Studio files
-build/
-.vs/
-*.vscode
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
