@@ -27,10 +27,7 @@ include_directories(
 
 # Collect all source files (C++ files) in the src directory
 file(GLOB SOURCES
-    src/main.cpp
-    src/shader_loader.cpp
-    src/helper_functions.cpp
-    external/stb_image.cpp
+    src/*.cpp
 )
 
 # Collect all header files (C++ header files) in the include directory

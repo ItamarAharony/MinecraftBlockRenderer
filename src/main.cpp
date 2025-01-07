@@ -8,6 +8,7 @@
 
 #include "shader_loader.h"
 #include "helper_functions.h"
+#include "vertices.h"
 
 
 GLuint loadTexture(const char* path)
@@ -81,58 +82,6 @@ int main() {
 
     // Set up OpenGL
     glEnable(GL_DEPTH_TEST);
-    float vertices[] = {
-        // Front face
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,  // Bottom-left
-         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,  // Bottom-right
-         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,  // Top-right
-         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,  // Top-right
-        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,  // Top-left
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,  // Bottom-left
-
-        // Back face
-        0.5f, -0.5f, -0.5f,  0.0f, 0.0f,  // Bottom-left
-         -0.5f, -0.5f, -0.5f,  1.0f, 0.0f,  // Bottom-right
-         -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,  // Top-right
-         -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,  // Top-right
-        0.5f,  0.5f, -0.5f,  0.0f, 1.0f,  // Top-left
-        0.5f, -0.5f, -0.5f,  0.0f, 0.0f,  // Bottom-left
-
-        // Left face (adjust texture coordinates)
-        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,  // Top-right
-        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,  // Bottom-right
-        -0.5f, -0.5f, -0.5f,  1.0f, 0.0f,  // Bottom-left
-        -0.5f, -0.5f, -0.5f,  1.0f, 0.0f,  // Bottom-left
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,  // Top-left
-        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,  // Top-right
-
-        // Right face (adjust texture coordinates)
-         0.5f,  0.5f,  0.5f,  0.0f, 1.0f,  // Top-right
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,  // Bottom-right
-         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,  // Bottom-left
-         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,  // Bottom-left
-         0.5f, -0.5f,  0.5f,  0.0f, 0.0f,  // Top-left
-         0.5f,  0.5f,  0.5f,  0.0f, 1.0f,  // Top-right
-
-         // Bottom face (reversed texture coordinates)
-         -0.5f, 0.5f, -0.5f,  1.0f, 1.0f,  // Top-left
-          0.5f, 0.5f, -0.5f,  0.0f, 1.0f,  // Top-right
-          0.5f, 0.5f,  0.5f,  0.0f, 0.0f,  // Bottom-right
-          0.5f, 0.5f,  0.5f,  0.0f, 0.0f,  // Bottom-right
-         -0.5f, 0.5f,  0.5f,  1.0f, 0.0f,  // Bottom-left
-         -0.5f, 0.5f, -0.5f,  1.0f, 1.0f,  // Top-left
-
-         // Top face (reversed texture coordinates)
-        -0.5f,  -0.5f, -0.5f,  1.0f, 0.0f,  // Top-left
-         0.5f,  -0.5f, -0.5f,  0.0f, 0.0f,  // Top-right
-         0.5f,  -0.5f,  0.5f,  0.0f, 1.0f,  // Bottom-right
-         0.5f,  -0.5f,  0.5f,  0.0f, 1.0f,  // Bottom-right
-        -0.5f,  -0.5f,  0.5f,  1.0f, 1.0f,  // Bottom-left
-        -0.5f,  -0.5f, -0.5f,  1.0f, 0.0f   // Top-left
-    };
-
-
-
 
     // Load the textures
     unsigned int textureBottom = loadTexture("../resources/Dirt_bottom.png");
@@ -169,7 +118,7 @@ int main() {
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, verticesSize, vertices, GL_STATIC_DRAW);
 
     // Define attribute pointers
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0); // positions
