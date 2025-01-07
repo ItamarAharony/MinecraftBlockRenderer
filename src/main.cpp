@@ -1,6 +1,4 @@
 //main.cpp
-
-
 #include <glad/glad.h>   // This must come first!
 #include <GLFW/glfw3.h>  // Then glfw3.h can be included after glad
 #include <iostream>
@@ -15,9 +13,6 @@
 #include "matrix_helper.h"
 #include "vertices.h"
 
-
-
-
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
 const char* VERTEX_SHADER_PATH = "../shaders/vertex_shader.glsl";
@@ -25,9 +20,6 @@ const char* FRAGMENT_SHADER_PATH = "../shaders/fragment_shader.glsl";
 const char* TEXTURE_BOTTOM_PATH = "../resources/Dirt_bottom.png";
 const char* TEXTURE_SIDE_PATH = "../resources/Dirt_side.png";
 const char* TEXTURE_TOP_PATH = "../resources/Dirt_top.png";
-
-
-
 
 int main() {
     // Initialize GLFW
@@ -141,8 +133,6 @@ int main() {
         glUniform1i(glGetUniformLocation(shaderProgram, "faceId"), 2);
         glBindTexture(GL_TEXTURE_2D, textureSide);
         glDrawArrays(GL_TRIANGLES, 0, 24);
-
-
 
 
         glfwSwapBuffers(window);
