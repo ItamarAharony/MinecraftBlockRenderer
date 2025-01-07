@@ -1,5 +1,8 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+//main.cpp
+
+
+#include <glad/glad.h>   // This must come first!
+#include <GLFW/glfw3.h>  // Then glfw3.h can be included after glad
 #include <iostream>
 #include <stb_image.h>  // Include stb_image for texture loading
 #include <glm/glm.hpp>
@@ -7,43 +10,23 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "shader_loader.h"
+#include "texture_loader.h"
 #include "helper_functions.h"
+#include "matrix_helper.h"
 #include "vertices.h"
 
 
-GLuint loadTexture(const char* path)
-{
-    GLuint textureID;
-    glGenTextures(1, &textureID);
-    glBindTexture(GL_TEXTURE_2D, textureID);
 
-    // Set texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);  // Horizontal direction
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);  // Vertical direction
 
-    // Set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+const int WINDOW_WIDTH = 800;
+const int WINDOW_HEIGHT = 600;
+const char* VERTEX_SHADER_PATH = "../shaders/vertex_shader.glsl";
+const char* FRAGMENT_SHADER_PATH = "../shaders/fragment_shader.glsl";
+const char* TEXTURE_BOTTOM_PATH = "../resources/Dirt_bottom.png";
+const char* TEXTURE_SIDE_PATH = "../resources/Dirt_side.png";
+const char* TEXTURE_TOP_PATH = "../resources/Dirt_top.png";
 
-    // Load and generate the texture
-    int width, height, nrChannels;
-    stbi_set_flip_vertically_on_load(true);  // Flip the image vertically if needed
-    unsigned char* data = stbi_load(path, &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture at path: " << path << std::endl;
-    }
-    stbi_image_free(data);
-
-    return textureID;
-}
 
 
 int main() {
@@ -57,7 +40,7 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
     // Create window
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Minecraft Dirt Block with Cat Texture", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Minecraft Dirt Block", nullptr, nullptr);
     if (!window) {
         std::cerr << "Failed to create GLFW window!" << std::endl;
         glfwTerminate();
@@ -72,21 +55,18 @@ int main() {
         std::cerr << "Failed to initialize GLAD!" << std::endl;
         return -1;
     }
+
     // Load and create the shader program
-    const char* vertexShaderPath = "../shaders/vertex_shader.glsl";
-    const char* fragmentShaderPath = "../shaders/fragment_shader.glsl";
-    unsigned int shaderProgram = createShaderProgram(vertexShaderPath, fragmentShaderPath);
-
-
+    unsigned int shaderProgram = createShaderProgram(VERTEX_SHADER_PATH, FRAGMENT_SHADER_PATH);
 
 
     // Set up OpenGL
     glEnable(GL_DEPTH_TEST);
 
     // Load the textures
-    unsigned int textureBottom = loadTexture("../resources/Dirt_bottom.png");
-    unsigned int textureSide = loadTexture("../resources/Dirt_side.png");
-    unsigned int textureTop = loadTexture("../resources/Dirt_top.png");
+    unsigned int textureBottom = loadTexture(TEXTURE_BOTTOM_PATH);
+    unsigned int textureSide = loadTexture(TEXTURE_SIDE_PATH);
+    unsigned int textureTop = loadTexture(TEXTURE_TOP_PATH);
 
     //  Bind Textures to Texture Units
     glUseProgram(shaderProgram); // Activate the shader program
@@ -103,10 +83,6 @@ int main() {
 
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, textureTop);
-
-
-
-
 
 
     // Create VAO, VBO, and EBO
@@ -144,17 +120,7 @@ int main() {
 
 
         // Set transformation matrices
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-
-        glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-        glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
-
-        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
-        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-
-
+        setupMatrices(shaderProgram);
      
         // Draw the cube
         glBindVertexArray(VAO);

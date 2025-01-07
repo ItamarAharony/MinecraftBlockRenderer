@@ -14,3 +14,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);  // Adjust OpenGL's viewport size to the new window size
 }
+
+
+
