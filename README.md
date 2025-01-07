@@ -2,6 +2,9 @@
 
 A lightweight C++ project using OpenGL for rendering a rotating Minecraft dirt block.
 
+<div align="center"> <img src="assets/demo.gif" alt="Demo of spinning Minecraft Dirt Block" width="600"> </div>
+
+
 ## Features
 - OpenGL-based 3D rendering with GLFW, GLAD, and GLM.
 - CMake support for cross-platform compatibility.
