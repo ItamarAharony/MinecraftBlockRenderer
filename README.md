@@ -1,6 +1,6 @@
 # Minecraft Block Renderer
 
-A lightweight C++ project using OpenGL for rendering a rotating Minecraft dirt block.
+A lightweight C++ project using OpenGL for rendering a rotating Minecraft dirt block. This is a simplification of a freelance project whose complete implementation has been kept confidential.
 
 <div align="center"> <img src="assets/demo.gif" alt="Demo of spinning Minecraft Dirt Block" width="600"> </div>
 
